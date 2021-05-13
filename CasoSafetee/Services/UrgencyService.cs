@@ -72,7 +72,6 @@ namespace CasoSafetee.Services
             if (otherUrgency != null)
                 return new UrgencyResponse("There is another urgency with same title, location and report day");
 
-            urgency.GuardianId = guardianId;
             urgency.Guardian = existingGuardian;
 
             try

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CasoSafetee.Resources
 {
@@ -14,5 +11,6 @@ namespace CasoSafetee.Resources
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string Adress { get; set; }
+        public IList<UrgencyResource> Urgencies { get; set; }
     }
 }

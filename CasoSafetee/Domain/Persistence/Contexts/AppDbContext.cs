@@ -28,8 +28,6 @@ namespace CasoSafetee.Domain.Persistence.Contexts
             builder.Entity<Guardian>().Property(e => e.Gender).IsRequired();
             builder.Entity<Guardian>().Property(e => e.Adress);
 
-            builder.Entity<Guardian>().HasMany(e => e.Urgencies).WithOne(u => u.Guardian).HasForeignKey(u => u.GuardianId);
-
             //Urgency
             builder.Entity<Urgency>().ToTable("Urgencies");
             builder.Entity<Urgency>().HasKey(u => u.Id);
@@ -39,6 +37,14 @@ namespace CasoSafetee.Domain.Persistence.Contexts
             builder.Entity<Urgency>().Property(u => u.Latitude).IsRequired();
             builder.Entity<Urgency>().Property(u => u.Longitude).IsRequired();
             builder.Entity<Urgency>().Property(u => u.ReportedAt).IsRequired().ValueGeneratedOnAdd();
+
+            //Navegation Property
+            builder.Entity<Guardian>().HasMany(e => e.Urgencies).WithOne(u => u.Guardian).
+                HasForeignKey(u => u.GuardianId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
+            //Navegation Property Configuration
+            builder.Entity<Guardian>().Navigation(e => e.Urgencies).UsePropertyAccessMode(PropertyAccessMode.Property);
+            builder.Entity<Urgency>().Navigation(u => u.Guardian).UsePropertyAccessMode(PropertyAccessMode.Property);
 
             //Apply Naming Convention
             builder.ApplySnakeCaseNamingConvention();

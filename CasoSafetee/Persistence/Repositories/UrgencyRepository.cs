@@ -27,12 +27,14 @@ namespace CasoSafetee.Persistence.Repositories
 
         public async Task<Urgency> FindByIdAsync(int urgencyId)
         {
-            return await _context.Urgencies.FindAsync(urgencyId);
+            var urgencies = await _context.Urgencies.Include(u => u.Guardian).ToListAsync();
+            return urgencies.Where(u => u.Id == urgencyId).FirstOrDefault();
         }
 
         public async Task<IEnumerable<Urgency>> ListByGuardianIdAsync(int guardianId)
         {
-            return await _context.Urgencies.Where(u => u.GuardianId == guardianId).ToListAsync();
+            var urgencies = await _context.Urgencies.Include(u => u.Guardian).ToListAsync();
+            return urgencies.Where(u => u.GuardianId == guardianId).ToList();
         }
 
         public void Update(Urgency urgency)

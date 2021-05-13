@@ -25,9 +25,6 @@ namespace CasoSafetee.Controllers
             _mapper = mapper;
         }
 
-
-
-
         //GET ALL
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<GuardianResource>), 200)]
@@ -35,7 +32,9 @@ namespace CasoSafetee.Controllers
         public async Task<IEnumerable<GuardianResource>> GetAllAsync()
         {
             var guardians = await _guardianService.ListAsync();
+
             var resources = _mapper.Map<IEnumerable<Guardian>, IEnumerable<GuardianResource>>(guardians);
+            
             return resources;
         }
 
